@@ -1,0 +1,38 @@
+{
+  "name": "bim360-mcapi-node-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "start.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "@adsk/autodesk-forge-bim360-modelcoordination-clash": "^3.3.17",
+    "@adsk/autodesk-forge-bim360-modelcoordination-index": "^1.2.32",
+    "@adsk/autodesk-forge-bim360-modelcoordination-modelset": "^3.0.51",
+    "@adsk/autodesk-forge-bim360-relationship": "^2.0.21",
+    "cookie-parser": "^1.4.4",
+    "crypto": "^1.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "forge-apis": "^0.4.5",
+    "fs": "0.0.1-security",
+    "jspdf": "^1.5.3",
+    "mkdirp": "^0.5.1",
+    "node-fetch": "^2.6.0",
+    "pako": "^1.0.10",
+    "powerbi-client": "^2.8.0",
+    "rimraf": "^3.0.0",
+    "route-async": "^1.0.5",
+    "superagent": "^5.1.0",
+    "zlib": "^1.0.5"
+  }
+}

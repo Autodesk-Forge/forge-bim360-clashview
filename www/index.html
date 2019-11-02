@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Model Coordinaition Demo</title>
+    <link rel="shortcut icon" href="https://github.com/Autodesk-Forge/learn.forge.viewhubmodels/raw/master/img/favicon.ico">
+
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta charset="utf-8"> 
+  </head>  
+
+    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"> 
+
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.min.css?v=7.0.*" type="text/css">
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.js?v=7.0.*"></script> 
+    <script src="https://use.fontawesome.com/dc0fab94ea.js"></script> 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.10/pako_inflate.min.js"></script> 
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+    <link rel="stylesheet" href="./css/main.css" type="text/css">   
+    <script src="./libs/MultipleModelUtil.js"></script>  
+    <script src="./libs/bootstrap-notify.min.js"></script>  
+    
+
+    <script src="./js/nav.help.js"></script>  
+    <script src="./js/utility.js"></script>  
+    <script src="./js/dm.projects.js"></script>   
+    <script src="./js/oauth.js"></script>  
+    <script src="./js/mc.ms.set.js"></script> 
+    <script src="./js/mc.clash.raw.view.js"></script>   
+    <script src="./js/ForgeViewer.js"></script>   
+    <script src="./index.js"></script>  
+    
+  <body>
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light rounded navbar-fixed-top">
+       <img src="/img/bim360.png" height="25"/> 
+ 
+        <div class="collapse navbar-collapse" id="navbarColor03">
+           <ul class="navbar-nav mr-auto">
+              <li class="nav-item dropdown" >
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span id="hub_dropdown_title">Hub List</span><span class="caret"></span>
+              </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="hubs_list"> 
+                    <div id="hubSpinner" class="spinner-border" style="display:none;margin: auto"></div>  
+                </div>
+              </li> 
+              <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span id="project_dropdown_title">Project List</span><span class="caret"></span>
+              </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="projects_list"> 
+                    <div id="projSpinner" class="spinner-border" style="display:none;margin: auto"></div> 
+                </div>
+              </li> 
+          </ul>
+
+          <ul class="navbar-nav ml-auto mx-auto">
+            <img alt="Autodesk Forge" src="/img/autodesk-forge.png" height="30" />  
+            <a class="navbar-brand" href="#">BIM 360 Model Coordination API Demo - Clash Basic View</a> 
+          </ul>
+
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="aboutHelp"> About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="configHelp"> Config</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/xiaodongliang/bim360-mcapi-node-clashview-basic.sample" target="_blank"> GitHub</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="signInButton"><span class="fas fa-user-tie" id="signInProfileImage" ></span>
+                <span id="signInButtonText" title="Sign in with your Autodesk Account">Sign in</span></a> 
+            </li> 
+          </ul> 
+        </div>
+      </nav>
+       
+      <div class="container-fluid fill jumbotron">
+      <div class="row fill">
+        <div class="col-sm-4 fill">
+          <div class="panel panel-default fill">
+             
+            <div id="clashview">
+              <div style="padding-top: 100px; text-align: center;">
+                <button class="btn btn-lg btn-primary" id="iconlogin">
+                  <img src="https://github.com/Autodesk-Forge/learn.forge.viewhubmodels/raw/master/img/autodesk_text.png"
+                    height="20"> Sign in
+                </button>
+                <br />
+                <br />
+                <br /> You may also need to provision your
+                <br /> BIM 360 Docs account for this app.
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8 fill">
+          <div id="forgeViewer">
+          <div id="forgeSpinner" class="spinner-border" style="display:none;margin: auto">
+          <span class="sr-only">Loading...</span>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   </body>  
+</html>
+
