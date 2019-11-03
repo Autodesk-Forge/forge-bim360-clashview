@@ -26,7 +26,17 @@ const mcClashServices = require('./services/mc.clash.services');
 const mcIndexServices = require('./services/mc.index.services'); 
 
 
-const clashDataFolder = './ClashData/'
+const clashDataFolder = './ClashData/' 
+var DataNameEnum = {
+  MS_VERSIONS: 'modelset-version.json',
+  CLASH_TESTS: 'clash-tests.json',
+  SCOPE_INSTANCE: 'scope-version-clash-instance.2.0.0.json.gz',
+  SCOPE_CLASH: 'scope-version-clash.2.0.0.json.gz',
+  SCOPE_DOCUMENTS: 'scope-version-document.2.0.0.json.gz',
+  CLASH_ISSUES: 'clash-issues.json',
+  DOCUMENTS_MAP:'documents-map.json' 
+};
+
 if(!fs.existsSync(clashDataFolder))
   mkdir.mkdirp(clashDataFolder,(err)=>{if(!err)console.log('folder ./ClashData/ is created')})
 const statusFolder = './Status/'
@@ -60,11 +70,10 @@ async function prepareClashData(input,jobId,toRefresh) {
       return
     }
     
+    //the data will be produced if it is missing.. 
     await getModelSetVersionData(thisClashVersionFolder,input)
-    await getClashData(thisClashVersionFolder,input)  
-    
-    //build document maps
-    buildDocsMap(mc_container_id,ms_id, ms_v_id) 
+    await getClashData(thisClashVersionFolder,input)
+    await buildDocsMap(thisClashVersionFolder) 
     utility.storeStatus(jobId, 'succeeded')
 
   }
@@ -75,17 +84,32 @@ async function prepareClashData(input,jobId,toRefresh) {
 
 }
 
-async function getModelSetVersionData(thisClashVersionFolder,input){ 
-  console.log('   modelset versions: ' + thisClashVersionFolder + 'modelset-versions.json')
-  //get versions info of one specific model set 
-  const msversions = await mcMSServices.getModelSetVersion(input)
-  await utility.saveJsonObj(thisClashVersionFolder, 'modelset-version.json', msversions) 
+async function getModelSetVersionData(folder,input){ 
+
+  if(fs.existsSync(folder + DataNameEnum.MS_VERSIONS)) { 
+    //model version  info is available 
+    console.log(DataNameEnum.MS_VERSIONS + ' are available at' + folder) 
+  }else{
+      //get versions info of one specific model set 
+      const msversions = await mcMSServices.getModelSetVersion(input)
+      await utility.saveJsonObj(folder, DataNameEnum.MS_VERSIONS, msversions) 
+      console.log(DataNameEnum.MS_VERSIONS + ' downloaded at ' + folder ) 
+   } 
 } 
 
-async function getClashData(thisClashVersionFolder,input){ 
+async function getClashData(folder,input){ 
    
-  const clashTestsRes = await mcClashServices.getClashTests(input)
-   
+  if(fs.existsSync(folder + DataNameEnum.CLASH_TESTS) &&
+     fs.existsSync(folder + DataNameEnum.SCOPE_DOCUMENTS)&&  
+     fs.existsSync(folder + DataNameEnum.SCOPE_INSTANCE)&&
+     fs.existsSync(folder + DataNameEnum.SCOPE_CLASH)){
+     //all clash data are available
+     console.log('  all clash data are available at' + folder) 
+
+     return
+   }
+
+  const clashTestsRes = await mcClashServices.getClashTests(input) 
   //one model set version with one clash test
   const oneTest = clashTestsRes.tests.filter(function (item) {
     return item.modelSetVersion === parseInt(input.ms_v_id);
@@ -93,8 +117,9 @@ async function getClashData(thisClashVersionFolder,input){
 
   // one clash test data
   if (oneTest && oneTest.length > 0) {
-    console.log('   clash tests : ' + thisClashVersionFolder + 'clash-tests.json')
-    await utility.saveJsonObj(thisClashVersionFolder, 'clash-tests.json', oneTest) 
+    
+    await utility.saveJsonObj(folder, 'clash-tests.json', oneTest) 
+    console.log(DataNameEnum.CLASH_TESTS + ' downloaded at ' + folder ) 
 
     let testid = oneTest[0].id
     input.testid = testid
@@ -103,27 +128,29 @@ async function getClashData(thisClashVersionFolder,input){
       let resurl = testRes.resources[index].url
       let headers = testRes.resources[index].headers
       let filename = testRes.resources[index].type + '.'+ testRes.resources[index].extension
-      let downloadRes = await utility.downloadResources(resurl, headers, thisClashVersionFolder, filename)
-      console.log('   Clash Data: ' + thisClashVersionFolder + filename)
+      let downloadRes = await utility.downloadResources(resurl, headers, folder, filename)
+      console.log(' Clash data downloaded at ' + folder ) 
     }
   } 
-} 
+}
 
 //build map with document displayname, index string and clash document id 
-async function buildDocsMap(mc_container_id,ms_id, ms_v_id) {
+async function buildDocsMap(folder) {
+ 
+  if(fs.existsSync(folder + DataNameEnum.DOCUMENTS_MAP)){
+    //document map  is available
+    console.log(DataNameEnum.DOCUMENTS_MAP + ' are available at' + folder) 
+    return    
+  }  
 
-  const thisClashVersionFolder = clashDataFolder + mc_container_id + '/'+ ms_id + '/' + ms_v_id + '/'
-  if (!fs.existsSync(thisClashVersionFolder))
-    return null
-
-  const msversionsBuffer = fs.readFileSync(thisClashVersionFolder + 'modelset-version.json')
+  const msversionsBuffer = fs.readFileSync(folder + DataNameEnum.MS_VERSIONS)
   const msversionsJson = JSON.parse(msversionsBuffer)
 
   const successDocs = msversionsJson.documentVersions.filter(function (data) {
     return data.documentStatus === 'Succeeded'
-  }) 
-
-  const clashDocumentBuffer = fs.readFileSync(thisClashVersionFolder + 'scope-version-document.2.0.0.json.gz')
+  })  
+ 
+  const clashDocumentBuffer = fs.readFileSync(folder + DataNameEnum.SCOPE_DOCUMENTS)
   const clashDocumentJson = JSON.parse(clashDocumentBuffer).documents
 
   let doc_map = []
@@ -143,7 +170,7 @@ async function buildDocsMap(mc_container_id,ms_id, ms_v_id) {
 
     const buff = new Buffer.from(successDocs[i].bubbleUrn);
     oneItem.urn = 'urn:' + buff.toString('base64').replace('/', '_').trim('=')
-  
+   
     //map clash doc id (in number) with the document 
     let filter = clashDocumentJson.filter(
       function (data) {
@@ -162,13 +189,15 @@ async function buildDocsMap(mc_container_id,ms_id, ms_v_id) {
   }
 
   if (successMap) {
-    console.log('   documents map: ' + thisClashVersionFolder + 'documents-map.json')
-    await utility.saveJsonObj(thisClashVersionFolder, 'documents-map.json', doc_map)
+    await utility.saveJsonObj(folder, DataNameEnum.DOCUMENTS_MAP, doc_map)
+    console.log(DataNameEnum.DOCUMENTS_MAP + ' downloaded at ' + folder ) 
     return doc_map
   }
   else
+    console.log(DataNameEnum.DOCUMENTS_MAP + ' FAILED at ' + folder )  
     return null
-} 
+}
+
  
 function getDocsMap(mc_container_id,ms_id, ms_v_id) {
   try {
@@ -176,7 +205,7 @@ function getDocsMap(mc_container_id,ms_id, ms_v_id) {
     if (!fs.existsSync(thisClashVersionFolder))
       return null
 
-    const docsMapBuffer = fs.readFileSync(thisClashVersionFolder + 'documents-map.json')
+    const docsMapBuffer = fs.readFileSync(thisClashVersionFolder + DataNameEnum.DOCUMENTS_MAP)
     const docsMapObj = JSON.parse(docsMapBuffer)
 
     return docsMapObj
@@ -186,22 +215,22 @@ function getDocsMap(mc_container_id,ms_id, ms_v_id) {
   }
 }
 
-function getRawClashData(mc_container_id,ms_id, ms_v_id) {
-
+function getRawClashData(mc_container_id,ms_id, ms_v_id) { 
   try {
     const thisClashVersionFolder = clashDataFolder + mc_container_id + '/'+ ms_id + '/' + ms_v_id + '/'
     if (!fs.existsSync(thisClashVersionFolder))
       return null
 
-    var clashInstanceBuffer = fs.readFileSync(thisClashVersionFolder + 'scope-version-clash-instance.2.0.0.json.gz')
+    var clashInstanceBuffer = fs.readFileSync(thisClashVersionFolder + DataNameEnum.SCOPE_INSTANCE)
     var clashInsJsonObj = JSON.parse(clashInstanceBuffer)
 
-    var clashBuffer = fs.readFileSync(thisClashVersionFolder + 'scope-version-clash.2.0.0.json.gz')
+    var clashBuffer = fs.readFileSync(thisClashVersionFolder + DataNameEnum.SCOPE_CLASH)
     var clashJsonObj = JSON.parse(clashBuffer)
 
-    var testBuffer = fs.readFileSync(thisClashVersionFolder + 'clash-tests.json')
+    var testBuffer = fs.readFileSync(thisClashVersionFolder + DataNameEnum.CLASH_TESTS)
     var testJsonObj = JSON.parse(testBuffer) 
 
+    //send compressed data
     const inputJson = { testJsonObj:testJsonObj,clashInsJsonObj: clashInsJsonObj, clashJsonObj: clashJsonObj }
     const compressedStreaming = utility.compressStream(inputJson)
 
@@ -211,7 +240,6 @@ function getRawClashData(mc_container_id,ms_id, ms_v_id) {
     return null
   }
 } 
-
 
 
  
