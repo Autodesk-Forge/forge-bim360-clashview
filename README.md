@@ -18,7 +18,7 @@
 
 
 ## Description
-This repository demonstrates basic viewing of clash raw data by Model Coordination API. It lists all clash instances data, and allow the user to click one instance to highlight within Forge Viewer.
+This repository demonstrates basic viewing of clash raw data by Model Coordination API. It lists all clash instances data, and allows the user to click one instance to highlight within Forge Viewer.
 
 ```diff
 - Note: The logic of this sample works for ModelSet which are created after Oct 1st,2019
@@ -39,7 +39,7 @@ This repository demonstrates basic viewing of clash raw data by Model Coordinati
 3. Click one modelset, all clash instances will be displayed. All documents of this modelset will also be loaded in Forge viewer
 4. Select one clash, the corresponding clash will be highlighted in Forge viewer. 
  
-Watch [this video](https://youtu.be/flP7aEJpHAU) on how to play this demo.
+Watch [this video](https://youtu.be/flP7aEJpHAU) to learn how to use this demo.
 
 ## Technology Architecture
 
@@ -51,7 +51,7 @@ The relationship of the data are demoed in the figure below:
 
  <p align="center"><img src="./help/relationship.png" width="800"></p>  
 
-Based on the relationship, the code analyzes the data to build the mapping among clash document, version URN and viewerable guid etc. The mapping is saved to **docsMap.json**
+Based on the relationship, the code analyzes the data to build the mapping among clash document, version URN and viewer-able guid etc. The mapping is saved to **docsMap.json**
 
  <p align="center"><img src="./help/docmap.png" width="400"></p>  
 
@@ -91,9 +91,9 @@ Watch [this video](https://www.youtube.com/watch?v=Oqa9O20Gj0c) on how deploy sa
 
 ## Further Reading
 - [Model Coordination API](https://dev.forge.autodesk.com/en/docs/bim360/v1/tutorials/model-coordination/?sha=6092_51)  
-- [BIM 360 API](https://developer.autodesk.com/en/docs/bim360/v1/overview/) and [App Provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps)
-- [Data Management API](https://developer.autodesk.com/en/docs/data/v2/overview/)
-- [Viewer](https://developer.autodesk.com/en/docs/viewer/v7)
+- [BIM 360 API](https://forge.autodesk.com/en/docs/bim360/v1/overview/) and [App Provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps)
+- [Data Management API](https://forge.autodesk.com/en/docs/data/v2/overview/)
+- [Viewer](https://forge.autodesk.com/en/docs/viewer/v7)
  
 ## Tutorials
 - [Model Coordination API Document](https://dev.forge.autodesk.com/en/docs/bim360/v1/tutorials/model-coordination/mc-concept-modelset/?sha=6092_51) 
