@@ -1,4 +1,4 @@
-# BIM 360 Model Coorrdination API Sample - Clash View Basic Application
+# BIM 360 Model Coordination API Sample - Clash View Basic Application
 
 [![node](https://img.shields.io/badge/nodejs-6.11.1-yellow.svg)](https://nodejs.org)
 [![npm](https://img.shields.io/badge/npm-3.10.10-green.svg)](https://www.npmjs.com/)
@@ -29,6 +29,7 @@ This repository demonstrates basic viewing of clash raw data by Model Coordinati
 <p align="center"><img src="./help/main.png" width="1000"></p>
 
 ## Live version
+
 (TO Deploy)
 
 ## Demonstrations
