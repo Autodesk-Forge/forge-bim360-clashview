@@ -87,7 +87,7 @@ Open the browser: [http://localhost:3000](http://localhost:3000).
 
 To deploy this application to Heroku, the **Callback URL** for Forge must use your `.herokuapp.com` address. After clicking on the button below, at the Heroku Create New App page, set your Client ID, Secret and Callback URL for Forge.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/xiaodongliang/bim360-node.js-issues.api)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://github.com/xiaodongliang/bim360-mcapi-node-clashview-basic.sample)
 
 Watch [this video](https://www.youtube.com/watch?v=Oqa9O20Gj0c) on how deploy samples to Heroku.
 

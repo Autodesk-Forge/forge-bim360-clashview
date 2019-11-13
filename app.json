@@ -1,6 +1,6 @@
 {
-  "name": "Export to Excel",
-  "description": "Export to Excel",
+  "name": "BIM 360 Model Coordination API Sample - Clash View Basic Application",
+  "description": "This repository demonstrates basic viewing of clash raw data by Model Coordination API. It lists all clash instances data, and allows the user to click one instance to highlight within Forge Viewer.",
   "repository": "https://github.com/xiaodongliang/bim360-mcapi-node-clashview-basic.sample",
   "logo": "https://avatars0.githubusercontent.com/u/8017462?v=3&s=200",
   "keywords": [
@@ -9,7 +9,8 @@
     "autodesk",
     "forge",
     "template",
-    "bim360appstore"
+    "bim360appstore",
+    "modelcoordination"
   ],
   "env": {
     "FORGE_CLIENT_ID": {
@@ -20,7 +21,7 @@
     },
     "FORGE_CALLBACK_URL": {
       "description": "Callback URL of your Forge app, required for 3-legged OAuth",
-      "value": "https://<<YOUR HEROKU APP NAME HERE>>.herokuapp.com/api/forge/callback/oauth"
+      "value": "https://<<YOUR HEROKU APP NAME HERE>>.herokuapp.com/oauth/callback"
     }
   },
   "website": "",
