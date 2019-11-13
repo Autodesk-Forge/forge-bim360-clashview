@@ -37,8 +37,8 @@ Watch [this video](https://youtu.be/flP7aEJpHAU) to learn how to use this demo.
 
 ## Demonstrations
 
-1. After loging in, on top left of navigation panel, select one hub, then select one project.
-2. After selecting one projet, the active modelsets in this activeproject will be listed.
+1. After logging in, on top left of navigation panel, select one hub, then select one project.
+2. After selecting one project, the active modelsets in this activeproject will be listed.
 3. Click one modelset, all clash instances will be displayed. All documents of this modelset will also be loaded in Forge viewer
 4. Select one clash, the corresponding clash will be highlighted in Forge viewer.
 
@@ -53,7 +53,7 @@ The relationship of the data are demoed in the figure below:
 
 <p align="center"><img src="./help/relationship.png" width="800"></p>
 
-Based on the relationship, the code analyzes the data to build the mapping among clash document, version URN and viewer-able guid etc. The mapping is saved to **docsMap.json**
+Based on the relationship, the code analyzes the data to build the mapping among the clash document, version URN and viewable guid etc. The mapping is save to **docsMap.json**
 
 <p align="center"><img src="./help/docmap.png" width="400"></p>
 
@@ -64,9 +64,9 @@ The mapping of clash instances data and the clash table in the sample:
 # Setup
 
 ## Prerequisites
-1. To work with the sample, firstly upload some source modesl manually to BIM 360 folder, or by other tool such as [BIM 360 Model Coordination Unit Test in Node.js](https://github.com/xiaodongliang/bim360-mcapi-node-unit.test/blob/master/test_04_CreateModelSet.js) and create model set in Model Coordination module with this folder. The demo **source model files** can be found at [BIM 360 Model Coorination API Unit Test
+1. To work with the sample, firstly upload some source models manually to a BIM 360 folder, or by other tools such as [BIM 360 Model Coordination Unit Test in Node.js](https://github.com/xiaodongliang/bim360-mcapi-node-unit.test/blob/master/test_04_CreateModelSet.js) and create a model set in Model Coordination module with this folder. The demo **source model files** can be found at [BIM 360 Model Coorination API Unit Test
 in Node.js](https://github.com/xiaodongliang/bim360-mcapi-node-unit.test/tree/master/Source%20Files). It includes two versions of models set.
-2. **BIM 360 Account**: must be Account Admin to add the app integration, or invited by admin of BIM admin. [Learn about provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps).
+2. **BIM 360 Account**: must be an Account Admin to add the app custom integration, or be invited by an admin of a BIM 360 account. [Learn about provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps).
 3. **Forge Account**: Learn how to create a Forge Account, activate subscription and create an app at [this tutorial](http://learnforge.autodesk.io/#/account/). Get _Forge client id_, _Forge client secret_ and _Forge callback url_ and input them to [config.js](./server/config.js)
 4. Create some [modelsets of Model Coordination](https://knowledge.autodesk.com/support/bim-360/learn-explore/caas/CloudHelp/cloudhelp/ENU/BIM360D-Model-Coordination/files/GUID-38CC3A1C-92FF-4682-847F-9CFAFCC4CCCE-html.html) in BIM 360.
 5. **Node.js**: basic knowledge with [**Node.js**](https://nodejs.org/en/).
@@ -75,13 +75,14 @@ in Node.js](https://github.com/xiaodongliang/bim360-mcapi-node-unit.test/tree/ma
 ## Running locally
 Clone this project or download it. It's recommended to install [GitHub desktop](https://desktop.github.com/). To clone it via command line, use the following (**Terminal** on MacOSX/Linux, **Git Shell** on Windows):
 
-git clone https://github.com/xiaodongliang/bim360-mcapi-node-clashview-basic.sample
+    git clone https://github.com/xiaodongliang/bim360-mcapi-node-clashview-basic.sample
 
-Open the project folder in **Visual Sutdio Code**. Install the required packages, set the enviroment variables with your client ID & secret and finally start it. Via command line, navigate to the folder where this repository was cloned and use the following:
+Open the project folder in **Visual Studio Code**. Install the required packages, set the environment variables with your client ID & secret and finally start it. Via the command line, navigate to the folder where this repository was cloned and use the following:
 
+```
 npm install
 node start.js
-
+```
 Open the browser: [http://localhost:3000](http://localhost:3000).
 
 ## Deployment
