@@ -31,6 +31,7 @@ This repository demonstrates basic viewing of clash raw data by Model Coordinati
 ## Live version
 
 https://bim360-clash-basic-view.herokuapp.com
+
 note: provision the app key with test BIM account firstly. click **Config** to get detail information)
 
 ## Demonstrations
