@@ -18,7 +18,7 @@
   "homepage": "",
   "dependencies": {
     "forge-bim360-modelcoordination-clash": "^3.3.27",
-    "forge-bim360-modelcoordination-index": "^1.2.44",
+    "forge-bim360-modelcoordination-modelset": "^3.0.65",
     "cookie-parser": "^1.4.4",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
