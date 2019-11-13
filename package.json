@@ -1,12 +1,14 @@
 {
-  "name": "bim360-mcapi-node-test",
+  "name": "bim360-mcapi-clash-basic-view",
   "version": "1.0.0",
   "description": "",
   "main": "start.js",
-  "scripts": {},
+  "scripts": {
+    "start": "NODE_ENV=production node start.js"
+  },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/xiaodongliang/bim360-mcapi-node-clashview-basic.sample"
   },
   "author": "",
   "license": "ISC",
@@ -15,10 +17,8 @@
   },
   "homepage": "",
   "dependencies": {
-    "@adsk/autodesk-forge-bim360-modelcoordination-clash": "^3.3.17",
-    "@adsk/autodesk-forge-bim360-modelcoordination-index": "^1.2.32",
-    "@adsk/autodesk-forge-bim360-modelcoordination-modelset": "^3.0.51",
-    "@adsk/autodesk-forge-bim360-relationship": "^2.0.21",
+    "forge-bim360-modelcoordination-clash": "^3.3.27",
+    "forge-bim360-modelcoordination-modelset": "^3.0.65",
     "cookie-parser": "^1.4.4",
     "crypto": "^1.0.1",
     "express": "^4.17.1",

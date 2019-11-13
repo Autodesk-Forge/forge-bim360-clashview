@@ -38,11 +38,7 @@ class ClashRawView {
             tr.append(td)
           }
           $("#clashRawTable tbody").append(tr) 
-      }
-
-      //since the content is switched to panel view, invoke tooltip style
-      $('#clashviewSpinner').css({ display: "none" });
-
+      } 
       global_Utility.successMessage('Produce ClashRawTable Succeeded!')  
 
       $('#clashviewSpinner').css({ display: "none" })
@@ -59,10 +55,7 @@ class ClashRawView {
       return false
     }
   }
-
-  /**
- * Promised function for loading Forge derivative manifest 
- */
+ 
   getRawData(mc_container_id, ms_id, ms_v_id) {
     var _this = this
     return new Promise((resolve, reject) => {
@@ -70,8 +63,7 @@ class ClashRawView {
         url: '/mc/clash/getRawClashData/' + mc_container_id + '/' + ms_id + '/' + ms_v_id,
         type: 'GET',
         success: (data) => {
-          //decompressed the buffer string
-          
+          //decompressed the buffer string 
           const depressedData = new TextDecoder("utf-8").decode(pako.inflate(data))
           const clashData = JSON.parse(depressedData)
           this._clashInsJsonObj = clashData.clashInsJsonObj

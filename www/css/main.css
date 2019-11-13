@@ -2,6 +2,7 @@ html, body{
   margin:0px;
   padding:0px;
 }
+ 
 
 .dropdown-menu{
   overflow: auto; 
@@ -98,7 +99,8 @@ body {
 
 .table  {
   display:block;
-  height: 550px;
-  overflow-y: auto;
+  height: 530px;
+  overflow: auto;
   text-align: center;
+  font-size: 14px;
  }

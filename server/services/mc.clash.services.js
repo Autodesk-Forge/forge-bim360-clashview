@@ -38,26 +38,20 @@
 const fetch = require('node-fetch');
 const fs = require("fs");
 
-//const clashclient = require("../MCAPI/Clash");  
-const clashclient = require("@adsk/autodesk-forge-bim360-modelcoordination-clash");  
+const clashclient = require("forge-bim360-modelcoordination-clash");  
 
 module.exports = { 
     getClashTests:getClashTests,
     getClashTest:getClashTest,
     getClashTestResources:getClashTestResources,
-    downloadResources:downloadResources,
-    searchContainerIssueClashGroups:searchContainerIssueClashGroups,
-    getMSAssignedClash:getMSAssignedClash,
-    createScreenshot:createScreenshot,
-    createClashIssue:createClashIssue,
-    getJobStatus:getJobStatus
+    downloadResources:downloadResources 
 } 
  
 async function getClashTests(input) {
   clashclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
 
   return new Promise((resolve, reject) => {
-      var testsApi = new clashclient.TestsApi()
+      var testsApi = new clashclient.ClashTestApi()
 
       testsApi.getModelSetClashTests(input.mc_container_id,input.ms_id)
       .then(res=>{
@@ -74,7 +68,7 @@ async function getClashTest(input) {
   clashclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
 
   return new Promise((resolve, reject) => {
-      var testsApi = new clashclient.TestsApi() 
+      var testsApi = new clashclient.ClashTestApi() 
       testsApi.getClashTest(input.mc_container_id,input.testid)
       .then(res=>{
           resolve(res)
@@ -90,7 +84,7 @@ async function getClashTestResources(input) {
   clashclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
 
   return new Promise((resolve, reject) => {
-      var testsApi = new clashclient.TestsApi()
+      var testsApi = new clashclient.ClashTestApi()
 
       testsApi.getClashTestResources(input.mc_container_id,input.testid)
       .then(res=>{
@@ -119,134 +113,4 @@ async function downloadResources(input) {
               resolve();
           }); 
       }); 
-} 
- 
-
-async function searchContainerIssueClashGroups(input) {
-    clashclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
-
-    return new Promise((resolve, reject) => {
-        var assignedApi = new clashclient.AssignedApi()
-  
-        assignedApi.searchContainerIssueClashGroups(input.mc_container_id,input.ms_id)
-        .then(res=>{
-            resolve(res.groups)
-        })
-        .catch(ex =>{
-            console.log(ex)
-            reject(ex)
-        })  
-    })  
 }  
-
-async function getMSAssignedClashOnePage(input){
-
-    clashclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
-
-    return new Promise((resolve, reject) => {
-        var assignedApi = new clashclient.AssignedApi()
-  
-        assignedApi.searchContainerIssueClashGroups(input.mc_container_id,input.ms_id,{continuationToken:input.continuationToken})
-        .then(res=>{
-            resolve(res)
-        })
-        .catch(ex =>{
-            console.log(ex)
-            reject(ex)
-        })  
-    })  
-}
-
-async function getMSAssignedClash(input) {
-    
-    let all =  []
-    let continuationToken = 0
-    let morePagesAvailable = true;
-  
-
-    while(morePagesAvailable){ 
-      input.continuationToken = continuationToken
-      const single = await getMSAssignedClashOnePage(input)
-      all = all.concat(single.groups);
-      continuationToken = single.page.continuationToken
-      morePagesAvailable = continuationToken > 0 
-    }  
-    return all 
-} 
-
-async function getTestAssignedClash(input) {
-    clashclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
-
-    return new Promise((resolve, reject) => {
-        var assignedApi = new clashclient.AssignedApi()
-  
-        assignedApi.getClashTestResourcesinput(input.mc_container_id,input.testid)
-        .then(res=>{
-            resolve(res.groups)
-        })
-        .catch(ex =>{
-            console.log(ex)
-            reject(ex)
-        })  
-    })  
-}  
-
-async function createScreenshot(input) {
-    clashclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
-
-    return new Promise((resolve, reject) => { 
-        //fetch(input.image64based)
-        //    .then(res => {
-                 //var fileBody=  res instanceof ReadableStream  
-
-                 var screenshotsApi = new clashclient.ScreenShotsApi()  
-                 screenshotsApi.addScreenShot(input.mc_container_id,input.ms_id,{body:input.filebody})
-                 .then(res=>{
-                     resolve(res.id)
-                 })
-                 .catch(ex =>{
-                     console.log(ex)
-                     reject(ex)
-                 })  
-        //}) 
-    })  
-}  
-
-async function createClashIssue(input) {
-    clashclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
-
-    return new Promise((resolve, reject) => { 
-    
-        var assignedApi = new clashclient.AssignedApi()
-        assignedApi.addAssignedClashGroupBatch(input.mc_container_id,input.test_id,{newAssignedClashGroup:input.issuedata})
-            .then(res=>{
-                resolve(res.jobId)
-            })
-            .catch(ex =>{
-                console.log(ex)
-                reject(ex)
-            })  
-    }) 
-} 
-
-async function getJobStatus(input) {
-    clashclient.ApiClient.instance.authentications["oauth2AuthCode"].accessToken = input.credentials.access_token;
-
-    return new Promise((resolve, reject) => { 
-    
-        var assignedApi = new clashclient.AssignedApi()
-        assignedApi.getClashGroupJob(input.mc_container_id,input.jobId)
-            .then(res=>{
-                resolve(res.status)
-            })
-            .catch(ex =>{
-                console.log(ex)
-                reject(ex)
-            })  
-    }) 
-}  
-
-
- 
-
-
