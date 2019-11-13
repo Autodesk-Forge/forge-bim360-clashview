@@ -33,13 +33,15 @@ https://bim360-clash-basic-view.herokuapp.com
 
 note: provision the app key with test BIM account firstly. click **Config** to get detail information)
 
+Watch [this video](https://youtu.be/flP7aEJpHAU) to learn how to use this demo.
+
 ## Demonstrations
 
 1. After loging in, on top left of navigation panel, select one hub, then select one project.
 2. After selecting one projet, the active modelsets in this activeproject will be listed.
 3. Click one modelset, all clash instances will be displayed. All documents of this modelset will also be loaded in Forge viewer
 4. Select one clash, the corresponding clash will be highlighted in Forge viewer.
-Watch [this video](https://youtu.be/flP7aEJpHAU) to learn how to use this demo.
+
 
 ## Technology Architecture
 
