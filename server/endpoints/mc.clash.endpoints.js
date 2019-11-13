@@ -20,10 +20,8 @@
 
 var express = require('express');
 var router = express.Router(); 
-var fs = require("fs"); 
 
 const UserSession = require('../services/userSession');  
-var mcClashServices = require('../services/mc.clash.services'); 
 const analyze = require('../analyze'); 
 
 router.get('/mc/clash/getRawClashData/:mc_container_id/:ms_id/:ms_v_id', async (req, res, next) => {

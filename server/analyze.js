@@ -23,7 +23,6 @@ const mkdir = require('mkdirp')
 const utility = require("./utility")  
 const mcMSServices = require('./services/mc.modelset.services')
 const mcClashServices = require('./services/mc.clash.services');
-const mcIndexServices = require('./services/mc.index.services'); 
 
 
 const clashDataFolder = './ClashData/' 
@@ -50,7 +49,7 @@ module.exports = {
   getDocsMap: getDocsMap
  }
 
-async function prepareClashData(input,jobId,toRefresh) { 
+async function prepareClashData(input,jobId) { 
 
   try {
     const mc_container_id  = input.mc_container_id
@@ -61,15 +60,8 @@ async function prepareClashData(input,jobId,toRefresh) {
     const thisClashVersionFolder = clashDataFolder + mc_container_id + '/'+ ms_id + '/' + ms_v_id + '/'
     if (!fs.existsSync(thisClashVersionFolder)){
       fs.mkdirSync(thisClashVersionFolder, { recursive: true })
-      toRefresh = true //no matter what the flag is, 
-    }
-     
-    if(!toRefresh) {
-      //neccessary check if the data is latest？
-      utility.storeStatus(jobId, 'succeeded') 
-      return
-    }
-    
+    } 
+
     //the data will be produced if it is missing.. 
     await getModelSetVersionData(thisClashVersionFolder,input)
     await getClashData(thisClashVersionFolder,input)
@@ -80,8 +72,7 @@ async function prepareClashData(input,jobId,toRefresh) {
   catch (ex) {
     console.log(ex.toString())
     utility.storeStatus(jobId, 'failed')
-  }
-
+  } 
 }
 
 async function getModelSetVersionData(folder,input){ 
