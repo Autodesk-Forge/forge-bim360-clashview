@@ -14,7 +14,7 @@
   ],
   "env": {
     "FORGE_CLIENT_ID": {
-      "description": "Forge Client ID"
+      "description": "Forge Client ID. Ensure this ID also provisions with BIM 360 account"
     },
     "FORGE_CLIENT_SECRET": {
       "description": "Forge Client Secret"
