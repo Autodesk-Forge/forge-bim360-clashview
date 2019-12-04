@@ -26,8 +26,7 @@ module.exports = {
     client_secret: process.env.FORGE_CLIENT_SECRET || 'Your Forge Client Secret'
   },
   //ensure the callback url is same to what has been registered with the Forge app
-  callbackURL: process.env.FORGE_CALLBACK_URL || 
-        '<Your App Base URL>/oauth/callback', 
+  callbackURL: process.env.FORGE_CALLBACK_URL || 'http://localhost:3000/api/forge/callback/oauth', 
 
   // Required scopes for your application on server-side
   scopeInternal: ['bucket:create', 'bucket:read', 'data:read', 'data:create', 'data:write'],

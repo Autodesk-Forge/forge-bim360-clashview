@@ -1,19 +1,18 @@
-# BIM 360 Model Coordination API Sample - Clash View Basic Application
+# BIM 360 Model Coordination: Clash View Basic Sample
 
 [![node](https://img.shields.io/badge/nodejs-6.11.1-yellow.svg)](https://nodejs.org)
 [![npm](https://img.shields.io/badge/npm-3.10.10-green.svg)](https://www.npmjs.com/)
-[![visual code](https://img.shields.io/badge/visual%20code-1.28.2-orange.svg)](https://code.visualstudio.com)
 
 [![oAuth2](https://img.shields.io/badge/oAuth2-v1-green.svg)](https://forge.autodesk.com/en/docs/oauth/v2/overview/)
 [![Data-Management](https://img.shields.io/badge/Data%20Management-v1-green.svg)](https://forge.autodesk.com/en/docs/data/v2/developers_guide/overview/)
 [![Viewer](https://img.shields.io/badge/Viewer-v7-green.svg)](https://forge.autodesk.com/en/docs/viewer/v7/developers_guide/overview/)
 [![BIM-360](https://img.shields.io/badge/BIM%20360-v1-green.svg)](https://forge.autodesk.com/en/docs/bim360/v1/overview/introduction/)
 
-[![ModelSetAPI](https://img.shields.io/badge/ModelSetAPI-3.0.65-orange)](https://www.npmjs.com/package/forge-bim360-modelcoordination-modelset)
-[![ClashAPI](https://img.shields.io/badge/ClashAPI-3.3.27-yellowgreen)](https://www.npmjs.com/package/forge-bim360-modelcoordination-clash)
+[![BIM 360 Model Set](https://img.shields.io/badge/BIM%20360%20Model%20Set-3.0.65-orange)](https://www.npmjs.com/package/forge-bim360-modelcoordination-modelset)
+[![BIM 360 Clash](https://img.shields.io/badge/BIM%20360%20Clash-3.3.27-yellowgreen)](https://www.npmjs.com/package/forge-bim360-modelcoordination-clash)
 
 [![License](http://img.shields.io/:license-mit-red.svg)](http://opensource.org/licenses/MIT)
-[![Level](https://img.shields.io/badge/Level-Intermediate-blue.svg)](http://developer.autodesk.com/)
+[![Level](https://img.shields.io/badge/Level-Intermediate-blue.svg)](http://forge.autodesk.com/)
 
 
 ## Description
@@ -25,13 +24,13 @@ This repository demonstrates basic viewing of clash raw data by Model Coordinati
 
 ## Thumbnail
 
-<p align="center"><img src="./help/main.png" width="1000"></p>
+![thumbnail](/thumbnail.png)
 
 ## Live version
 
-https://bim360-clash-basic-view.herokuapp.com
+[bim360-clash-basic-view.herokuapp.com](https://bim360-clash-basic-view.herokuapp.com)
 
-note: provision the app key with test BIM account firstly. click **Config** to get detail information)
+Note: provision the app key with test BIM account firstly. click **Config** to get detail information)
 
 Watch [this video](https://youtu.be/flP7aEJpHAU) to learn how to use this demo.
 
@@ -47,49 +46,65 @@ Watch [this video](https://youtu.be/flP7aEJpHAU) to learn how to use this demo.
 
 The sample firstly downloads the model set data and clash data of the selected project.
 
-<p align="center"><img src="./help/workflow.png" width="600"></p>
+![Workflow](/help/workflow.png)
 
 The relationship of the data are demoed in the figure below:
 
-<p align="center"><img src="./help/relationship.png" width="800"></p>
+![Relationship](/help/relationship.png)
 
 Based on the relationship, the code analyzes the data to build the mapping among the clash document, version URN and viewable guid etc. The mapping is save to **docsMap.json**
 
-<p align="center"><img src="./help/docmap.png" width="400"></p>
+![Document Map](/help/docmap.png)
 
 The mapping of clash instances data and the clash table in the sample:
-<p align="center"><img src="./help/table.png" width="400"></p>
+
+![Table](/help/table.png)
 
 
 # Setup
 
 ## Prerequisites
-1. To work with the sample, firstly upload some source models manually to a BIM 360 folder, or by other tools such as [BIM 360 Model Coordination Unit Test in Node.js](https://github.com/xiaodongliang/bim360-mcapi-node-unit.test/blob/master/test_04_CreateModelSet.js) and create a model set in Model Coordination module with this folder. The demo **source model files** can be found at [BIM 360 Model Coorination API Unit Test
-in Node.js](https://github.com/xiaodongliang/bim360-mcapi-node-unit.test/tree/master/Source%20Files). It includes two versions of models set.
-2. **BIM 360 Account**: must be an Account Admin to add the app custom integration, or be invited by an admin of a BIM 360 account. [Learn about provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps).
-3. **Forge Account**: Learn how to create a Forge Account, activate subscription and create an app at [this tutorial](http://learnforge.autodesk.io/#/account/). Get _Forge client id_, _Forge client secret_ and _Forge callback url_ and input them to [config.js](./server/config.js)
-4. Create some [modelsets of Model Coordination](https://knowledge.autodesk.com/support/bim-360/learn-explore/caas/CloudHelp/cloudhelp/ENU/BIM360D-Model-Coordination/files/GUID-38CC3A1C-92FF-4682-847F-9CFAFCC4CCCE-html.html) in BIM 360.
-5. **Node.js**: basic knowledge with [**Node.js**](https://nodejs.org/en/).
-6. **JavaScript** basic knowledge with **jQuery** and **Bootstrap**
+
+1. **BIM 360 Account**: must be an Account Admin to add the app custom integration, or be invited by an admin of a BIM 360 account. [Learn about provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps).
+2. **Forge Account**: Learn how to create a Forge Account, activate subscription and create an app at [this tutorial](http://learnforge.autodesk.io/#/account/). Get _Forge client id_, _Forge client secret_ and _Forge callback url_ and input them to [config.js](./server/config.js)
+3. Create some [modelsets of Model Coordination](https://knowledge.autodesk.com/support/bim-360/learn-explore/caas/CloudHelp/cloudhelp/ENU/BIM360D-Model-Coordination/files/GUID-38CC3A1C-92FF-4682-847F-9CFAFCC4CCCE-html.html) in BIM 360.
+4. **Node.js**: basic knowledge with [**Node.js**](https://nodejs.org/en/).
+5. **JavaScript** basic knowledge with **jQuery** and **Bootstrap**
 
 ## Running locally
+
 Clone this project or download it. It's recommended to install [GitHub desktop](https://desktop.github.com/). To clone it via command line, use the following (**Terminal** on MacOSX/Linux, **Git Shell** on Windows):
 
-    git clone https://github.com/xiaodongliang/bim360-mcapi-node-clashview-basic.sample
+    git clone https://github.com/Autodesk-Forge/forge-bim360-clashview
 
 Open the project folder in **Visual Studio Code**. Install the required packages, set the environment variables with your client ID & secret and finally start it. Via the command line, navigate to the folder where this repository was cloned and use the following:
 
-```
-npm install
-node start.js
-```
+Mac OSX/Linux (Terminal)
+
+    npm install
+    export FORGE_CLIENT_ID=<<YOUR CLIENT ID FROM DEVELOPER PORTAL>>
+    export FORGE_CLIENT_SECRET=<<YOUR CLIENT SECRET>>
+    export FORGE_CALLBACK_URL=<<YOUR CALLBACK URL>>
+    npm start
+
+Windows (use **Node.js command line** from Start menu)
+
+    npm install
+    set FORGE_CLIENT_ID=<<YOUR CLIENT ID FROM DEVELOPER PORTAL>>
+    set FORGE_CLIENT_SECRET=<<YOUR CLIENT SECRET>>
+    set FORGE_CALLBACK_URL=<<YOUR CALLBACK URL>>
+    npm start
+
 Open the browser: [http://localhost:3000](http://localhost:3000).
+
+To work with the sample, firstly upload some source models manually to a BIM 360 folder, or by other tools such as [BIM 360 Model Coordination Unit Test in Node.js](https://github.com/xiaodongliang/bim360-mcapi-node-unit.test/blob/master/test_04_CreateModelSet.js) and create a model set in Model Coordination module with this folder. The demo **source model files** can be found at [BIM 360 Model Coorination API Unit Test
+in Node.js](https://github.com/xiaodongliang/bim360-mcapi-node-unit.test/tree/master/Source%20Files). It includes two versions of models set.
 
 ## Deployment
 
 To deploy this application to Heroku, the **Callback URL** for Forge must use your `.herokuapp.com` address. After clicking on the button below, at the Heroku Create New App page, set your Client ID, Secret and Callback URL for Forge.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/xiaodongliang/bim360-mcapi-node-clashview-basic.sample)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 Watch [this video](https://www.youtube.com/watch?v=Oqa9O20Gj0c) on how deploy samples to Heroku.
 
@@ -102,7 +117,6 @@ Watch [this video](https://www.youtube.com/watch?v=Oqa9O20Gj0c) on how deploy sa
 
 ## Tutorials
 - [Model Coordination API Document](https://forge.autodesk.com/en/docs/bim360/v1/tutorials/model-coordination)
-- [Model Coordination API .NET Tutorials](TODO)
 - [View BIM 360 Models](http://learnforge.autodesk.io/#/tutorials/viewhubmodels)
 
 ## Blogs:
@@ -122,7 +136,8 @@ Watch [this video](https://www.youtube.com/watch?v=Oqa9O20Gj0c) on how deploy sa
 
 - **Cannot see my BIM 360 projects**: Make sure to provision the Forge App Client ID within the BIM 360 Account, [learn more here](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps). This requires the Account Admin permission.
 
-- The code of highlighting objects within Forge Viewer requires the corresponding documents of one clash instance have been loaded. If not, the highlighting will not work, try again when the loading is completed
+- The code of highlighting objects within Forge Viewer requires the corresponding documents of one clash instance have been loaded. If not, the highlighting will not work, try again when the loading is completed.
+
 ## License
 
 This sample is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE) file for full details.

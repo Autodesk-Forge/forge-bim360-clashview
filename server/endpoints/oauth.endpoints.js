@@ -69,7 +69,7 @@ router.get('/oauth/url', function (req, res) {
 });
 
 // wait for Autodesk callback (oAuth callback)
-router.get('/oauth/callback', function (req, res) {
+router.get('/api/forge/callback/oauth', function (req, res) {
 
   var code = req.query.code;
   var userSession = new UserSession(req.session);
