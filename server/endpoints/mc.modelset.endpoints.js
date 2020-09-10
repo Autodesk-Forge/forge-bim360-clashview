@@ -52,21 +52,26 @@ router.get('/mc/modelset/getModelSets/:mc_container_id', async (req, res, next) 
 
       console.log('getModelSets: get model sets succeeded!')
 
-      let msArray = []   
-      for(let i in  mssRaw.modelSets) {
-        let element = mssRaw.modelSets[i]
+      let promiseArr = mssRaw.modelSets.map(async (element, index) => { 
+        let ms = []  
         input.ms_id = element.modelSetId
         let r = await mcMSServices.getModelSet(input)
         if(!r.isDisabled){
-          msArray.push({ms_id:element.modelSetId,
+          ms.push({ms_id:element.modelSetId,
                         ms_name:element.name,
                         tipVersion:r.tipVersion})
-         }   
-      }
-      console.log('getModelSets: get each modelset succeeded.')
+         } 
+         return ms
+      }); 
 
-      res.json(msArray)   
- 
+      return Promise.all(promiseArr).then((resultsArray) => {
+        console.log('getModelSets: get each modelset succeeded.')
+        const msArray  =  utility.flatDeep(resultsArray,Infinity)
+        res.json(msArray)   
+       }).catch(function (err) {
+        console.log(`getModelSets: get each modelset failed.${err}`) 
+        res.json([])  
+       })  
      } catch(e) {
         // here goes out error handler
         console.error('getModelSets failed: ')
