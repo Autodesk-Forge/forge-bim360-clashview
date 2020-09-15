@@ -23,10 +23,10 @@ module.exports = {
   // set environment variables or hard-code here
   credentials: {
     client_id: process.env.FORGE_CLIENT_ID || '<Your Forge Client ID>',
-    client_secret: process.env.FORGE_CLIENT_SECRET || 'Your Forge Client Secret'
+    client_secret: process.env.FORGE_CLIENT_SECRET || '<Your Forge Client Secret>'
   },
   //ensure the callback url is same to what has been registered with the Forge app
-  callbackURL: process.env.FORGE_CALLBACK_URL || 'http://localhost:3000/api/forge/callback/oauth', 
+  callbackURL: process.env.FORGE_CALLBACK_URL || 'http://localhost:3000/api/forge/callback/oauth',
 
   // Required scopes for your application on server-side
   scopeInternal: ['bucket:create', 'bucket:read', 'data:read', 'data:create', 'data:write'],
@@ -42,10 +42,8 @@ module.exports = {
         'Content-Type': 'application/json'
       }
     },
-    getUserProfileAtMe:function(){
-      return this.basedUrl+ '/userprofile/v1/users/@me'
+    getUserProfileAtMe: function () {
+      return this.basedUrl + '/userprofile/v1/users/@me'
     }
-   }
-
-
+  }
 };

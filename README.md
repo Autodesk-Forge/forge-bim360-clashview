@@ -5,7 +5,7 @@
 
 [![oAuth2](https://img.shields.io/badge/oAuth2-v1-green.svg)](https://forge.autodesk.com/en/docs/oauth/v2/overview/)
 [![Data-Management](https://img.shields.io/badge/Data%20Management-v1-green.svg)](https://forge.autodesk.com/en/docs/data/v2/developers_guide/overview/)
-[![Viewer](https://img.shields.io/badge/Viewer-v7-green.svg)](https://forge.autodesk.com/en/docs/viewer/v7/developers_guide/overview/)
+[![Viewer](https://img.shields.io/badge/Viewer-v7.25-green.svg)](https://forge.autodesk.com/en/docs/viewer/v7/developers_guide/overview/)
 [![BIM-360](https://img.shields.io/badge/BIM%20360-v1-green.svg)](https://forge.autodesk.com/en/docs/bim360/v1/overview/introduction/) 
  
 
@@ -35,7 +35,7 @@ Watch [this video](https://youtu.be/flP7aEJpHAU) to learn how to use this demo.
 
 ## Demonstration
 
-To work with the sample, firstly upload some source models to BIM 360 folder, then create model set in Model Coordination module with this folder. Please refer to [BIM 360 Model Coordination documentation](http://help.autodesk.com/view/BIM360D/ENU/?guid=GUID-38CC3A1C-92FF-4682-847F-9CFAFCC4CCCE) for details. Check `Sample Files` folder for testing RVT files, it includes two versions of models set.
+To work with the sample, firstly upload some source models to BIM 360 folder, then create model set in Model Coordination module with this folder. Please refer to [BIM 360 Model Coordination documentation](http://help.autodesk.com/view/BIM360D/ENU/?guid=GUID-38CC3A1C-92FF-4682-847F-9CFAFCC4CCCE) for details. Check [Model Coordination Sample Files](https://github.com/xiaodongliang/Demo-Test-Sample-Files/tree/master/Model%20Coordination%20API) for testing RVT files, it includes two versions of models set.
 
 1. After logging in, on top left of navigation panel, select one hub, then select one project.
 2. After selecting one project, the active modelsets in this activeproject will be listed.

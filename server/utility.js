@@ -27,120 +27,127 @@ const pako = require('pako')
 
 const statusFolder = './Status/'
 
-module.exports = { 
-    clearFolder:clearFolder,
-    saveJsonObj:saveJsonObj,
-    downloadResources:downloadResources,
-    readLinesFile:readLinesFile,
-    randomValueBase64:randomValueBase64,
-    storeStatus:storeStatus,
-    readStatus:readStatus,
-    deleteStatus:deleteStatus,
-    compressStream:compressStream 
+module.exports = {
+    clearFolder,
+    saveJsonObj,
+    downloadResources,
+    readLinesFile,
+    randomValueBase64,
+    storeStatus,
+    readStatus,
+    deleteStatus,
+    compressStream,
+    flatDeep
 }
 
-async function clearFolder(folder){
+async function clearFolder(folder) {
     return new Promise((resolve, reject) => {
-        rimraf(folder+ '/*', function () { 
-            console.log('clear output foler done'); 
+        rimraf(folder + '/*', function () {
+            console.log('clear output foler done');
             resolve();
-        }); 
-    }); 
-}  
- 
+        });
+    });
+}
 
-async function saveJsonObj(path,filename,obj){
+
+async function saveJsonObj(path, filename, obj) {
 
     return new Promise((resolve, reject) => {
         const stringToWrite = JSON.stringify(obj, null, ' ')
-        // Trim leading spaces:
-        .replace(/^ +/gm, '')
-        // Add a space after every key, before the `:`:
-        .replace(/: "(?:[^"]+|\\")*",?$/gm, ' $&');
+            // Trim leading spaces:
+            .replace(/^ +/gm, '')
+            // Add a space after every key, before the `:`:
+            .replace(/: "(?:[^"]+|\\")*",?$/gm, ' $&');
 
-        fs.writeFile(path+filename, 
-        stringToWrite, function(err) { 
-            if(err) {
-                reject(err);
-            } 
-            resolve(path+filename + ' saved!');
-        });  
-    }); 
-}
- 
-
-async function downloadResources( 
-    url,headers,
-    path,filename) { 
-
-        const options = { method: 'GET', headers: headers }; 
-        const res = await fetch(url,options); 
-        const fileStream = fs.createWriteStream(path+filename); 
-
-        return new Promise((resolve, reject) => {
-            res.body.pipe(fileStream);
-                res.body.on("error", (err) => {
-                reject(err);
+        fs.writeFile(path + filename,
+            stringToWrite, function (err) {
+                if (err) {
+                    reject(err);
+                }
+                resolve(path + filename + ' saved!');
             });
-            fileStream.on("finish", function(res) {
+    });
+}
+
+
+async function downloadResources(
+    url, headers,
+    path, filename) {
+
+    const options = { method: 'GET', headers: headers };
+    const res = await fetch(url, options);
+    const fileStream = fs.createWriteStream(path + filename);
+
+    return new Promise((resolve, reject) => {
+        res.body.pipe(fileStream);
+        res.body.on("error", (err) => {
+            reject(err);
+        });
+        fileStream.on("finish", function (res) {
             resolve(filename);
-            }); 
-        }); 
-}  
+        });
+    });
+}
 
 
-async function readLinesFile(csvFilePath){
+async function readLinesFile(csvFilePath) {
 
     return new Promise((resolve, reject) => {
 
-        var returnJson =[]
+        var returnJson = []
         let rl = readline.createInterface({
             input: fs.createReadStream(csvFilePath)
         });
-        
-        let line_no = 0; 
+
+        let line_no = 0;
         // event is emitted after each line
-        rl.on('line', function(line) {
-            line_no++; 
+        rl.on('line', function (line) {
+            line_no++;
             returnJson.push(JSON.parse(line.trim()))
-        }); 
+        });
         // end
-        rl.on('close', function(line) {
+        rl.on('close', function (line) {
             console.log('Total lines : ' + line_no);
             resolve(returnJson)
         });
-    }); 
+    });
 }
 
-function randomValueBase64 (len) {
+function randomValueBase64(len) {
     return crypto.randomBytes(Math.ceil(len * 3 / 4))
-      .toString('base64')   // convert to base64 format
-      .slice(0, len)        // return required number of characters
-      .replace(/\+/g, '0')  // replace '+' with '0'
-      .replace(/\//g, '0'); // replace '/' with '0'
+        .toString('base64')   // convert to base64 format
+        .slice(0, len)        // return required number of characters
+        .replace(/\+/g, '0')  // replace '+' with '0'
+        .replace(/\//g, '0'); // replace '/' with '0'
 }
 
-function storeStatus(jobId,status){
-    fs.writeFileSync(statusFolder + jobId,status)
+function storeStatus(jobId, status) {
+    fs.writeFileSync(statusFolder + jobId, status)
 }
 
-function readStatus(jobId){ 
-   if(fs.existsSync(statusFolder + jobId)) {
-      var stats = fs.readFileSync(statusFolder + jobId,"utf8")
-      return stats; 
-   }
-   else 
-      return null
+function readStatus(jobId) {
+    if (fs.existsSync(statusFolder + jobId)) {
+        var stats = fs.readFileSync(statusFolder + jobId, "utf8")
+        return stats;
+    }
+    else
+        return null
 }
 
-function deleteStatus(jobId){ 
-    if(fs.existsSync(statusFolder + jobId)) { 
-        fs.unlinkSync(statusFolder + jobId) 
-     }  
- }
- 
+function deleteStatus(jobId) {
+    if (fs.existsSync(statusFolder + jobId)) {
+        fs.unlinkSync(statusFolder + jobId)
+    }
+}
 
-function compressStream(inputJson){ 
+
+function compressStream(inputJson) {
     const inputStr = JSON.stringify(inputJson)
     return pako.deflate(inputStr)
- }
+}
+
+
+function flatDeep(arr, d = 1) {
+    return d > 0 ? arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val), [])
+                 : arr.slice();
+};
